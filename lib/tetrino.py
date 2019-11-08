@@ -9,6 +9,7 @@ class Tetrino:
         self.speed = .25
         self.speed_count = 1
         self.location = location
+        self.block_locations = []
         self.image = 'images/intro_ball.gif'
 
 
@@ -19,7 +20,20 @@ class Tetrino:
     
     def set_location(self):
         # Interprets the locations into a graphic
-        pass
+        for number in self.shape_positions:
+            locations = []
+            y_offset = 0
+            x_offset = 0
+            binary_number = '{0:016b}'.format(number)
+            for i in range(len(binary_number)):
+                if i % 4 == 0:
+                    y_offset += self.block_size
+                    x_offset = 0
+                x_offset += self.block_size
+                if binary_number[i] == '1':
+                    locations.append(self.location[constant.X] + x_offset,
+                        self.location[constant.Y] + y_offset)
+            self.block_locations.append(locations)                
 
     def rotate(self):
         pass

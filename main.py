@@ -11,7 +11,7 @@ black = 0, 0, 0
 MOTION = .25
 DESCENT = .1
 
-game = Game(constant.SMALL)
+game = Game(constant.MEDIUM)
 print(game.block_size)
 screen = pygame.display.set_mode(game.screen_size)
 
