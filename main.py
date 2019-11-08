@@ -1,6 +1,8 @@
 import sys, pygame
-from classes.game import Game
-from classes.tetrino import Tetrino
+from lib.game import Game
+from lib.tetrino import Tetrino
+import lib.constants as constant
+
 pygame.init()
 
 size = width, height = 640, 800
@@ -9,12 +11,14 @@ black = 0, 0, 0
 MOTION = .25
 DESCENT = .1
 
-game = Game()
-screen = pygame.display.set_mode(game.size)
+game = Game(constant.SMALL)
+print(game.block_size)
+screen = pygame.display.set_mode(game.screen_size)
 
-tetrino = Tetrino(game.size)
-x = tetrino.x
-y = 0
+tetrino = game.create_random_tetrino()
+x = tetrino.location[constant.X]
+y = tetrino.location[constant.Y]
+print(x, y)
 ball = pygame.image.load(tetrino.image)
 ballrect = ball.get_rect()
 

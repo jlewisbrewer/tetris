@@ -16,6 +16,10 @@ class Tetrino:
         if self.speed > 0:
             self.speed -= self.speed_count * .01
             self.speed_count += 1
-        
+    
+    def set_location(self):
+        # Interprets the locations into a graphic
+        pass
+
     def rotate(self):
         pass

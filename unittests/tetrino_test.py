@@ -1,15 +1,20 @@
 import unittest
-from classes.tetrino import Tetrino
-from classes.game import Game
+from lib.tetrino import Tetrino
+from lib.game import Game
+import lib.constants as constant
 
 class TestTetrino(unittest.TestCase):
     def setUp(self):
-        self.game = Game()
-        self.tetrino1 = Tetrino(self.game.size)
-        self.tetrino2 = Tetrino(self.game.size)
+        self.game = Game(constant.SMALL)
+        location = 0, 0
+        shape = 0
+        self.tetrino1 = Tetrino(self.game.screen_size, location, shape)
+        self.tetrino2 = Tetrino(self.game.screen_size, location, shape)
 
     def test_initial_position(self):
-        self.assertTrue(self.tetrino1.x <= self.game.size[1] and self.tetrino1.x >= 0)
+        self.assertTrue(self.tetrino1.location[constant.X] 
+            <= self.game.screen_size[constant.Y] and 
+            self.tetrino1.location[constant.X] >= 0)
     
     def test_speed_up(self):
         self.assertEqual(self.tetrino1.speed, self.tetrino2.speed)
