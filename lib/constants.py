@@ -26,3 +26,10 @@ LARGE = 30
 
 #Colors
 COLORS = ['purple', 'orange', 'teal', 'blue', 'green', 'red', 'yellow']
+PURPLE = 0
+ORANGE = 1
+TEAL = 2
+BLUE = 3
+GREEN = 4
+RED = 5
+YELLOW = 6
