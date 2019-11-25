@@ -24,7 +24,12 @@ while 1:
         game.update_board()
 
     pressed = pygame.key.get_pressed()
-    left_move, right_move, down_move = game.game_board.check_movement(curr)
+    left_move, right_move, down_move, rotate_move \
+         = game.game_board.check_movement(curr)
+
+    if down_move == False:
+        # We're at the bottom
+        new_tetrino = True
 
     if left_move == True:
         if pressed[pygame.K_LEFT] and time() > prev_time + interval:
@@ -34,14 +39,20 @@ while 1:
         if pressed[pygame.K_RIGHT] and time() > prev_time + interval:
             game.move_tetrino(curr, +1, 0)
             prev_time = time()
-    if down_move == True:    
-        if pressed[pygame.K_DOWN] and time() > prev_time + interval:
-            game.move_tetrino(curr, 0, +1)
+    if rotate_move == True:
+        if pressed[pygame.K_UP] and time() > prev_time + interval:
+            print('pressed up')
+            print(curr.locations)
+            curr.rotate()
+            print(curr.locations)
             prev_time = time()
 
-    if down_move == False:
-        # We're at the bottom
-        new_tetrino = True
+
+    if down_move == True:    
+        if pressed[pygame.K_DOWN] and time() > prev_time + interval or \
+            time() > prev_time + interval:
+            game.move_tetrino(curr, 0, +1)
+            prev_time = time()
 
     screen.fill(game.background_color)
     

@@ -9,27 +9,30 @@ class GameBoard():
         self.grid = [[-1 for num in range(10)] for num in range(20)]
     
     def _add_to_board(self, tetrino):
-        # I think we will have to change this tetrino instances in the future
         for location in tetrino.locations:
-            self.grid[location[constant.Y]][location[constant.X]] = tetrino
+            try:
+                self.grid[location[constant.Y]][location[constant.X]] = tetrino
+            except IndexError:
+                print(f'Loc: {location}')
     
     def check_movement(self, tetrino):
-        left, right, down = True, True, True
+        left, right, down, rotate = True, True, True, True
         left_array = [False for _ in range(4)]
         right_array = [False for _ in range(4)]
         down_array = [False for _ in range(4)]
+        rotate_array = [False for _ in range(4)]
         locations = tetrino.locations
-        # print(locations)
+        new_shape = (tetrino.shape_index + 1) % 4
         for i in range(len(locations)):
             curr_x = locations[i][constant.X]
             curr_y = locations[i][constant.Y]
-            if curr_x != 0 and (self.grid[curr_y][curr_x -1] == -1 
+            if curr_x != 0 and (self.grid[curr_y][curr_x -1] == -1 \
                 or self.grid[curr_y][curr_x - 1] == tetrino):
                 left_array[i] = True
-            if curr_x != 9 and (self.grid[curr_y][curr_x + 1] == -1 
+            if curr_x != 9 and (self.grid[curr_y][curr_x + 1] == -1 \
                 or self.grid[curr_y][curr_x + 1] == tetrino):
                 right_array[i] = True
-            if curr_y != 19 and (self.grid[curr_y + 1][curr_x] == -1 
+            if curr_y != 19 and (self.grid[curr_y + 1][curr_x] == -1 \
                 or self.grid[curr_y + 1][curr_x] == tetrino):
                 down_array[i] = True
         if sum(left_array) != 4:
@@ -38,16 +41,11 @@ class GameBoard():
             right = False
         if sum(down_array) != 4:
             down = False
-        return left, right, down
-    
-    # def check_location(self, tetrino):
-    #     locations = tetrino.locations
-
-    #     for location in locations:
-    #         curr_y = location[constant.Y]
-    #         if curr_y + 1 == 19 or curr_y
+        # Keep it as true for now
+        rotate = True
+        return left, right, down, rotate
         
     def update_board(self, tetrino_set):
         self._clear_board()
-        for t_id, t in tetrino_set.items():
+        for _, t in tetrino_set.items():
             self._add_to_board(t)
