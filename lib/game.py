@@ -2,9 +2,10 @@ from random import randrange
 import lib.constants as constant
 from lib.tetrino import Tetrino
 from lib.game_board import GameBoard
-
+from lib.translatable import Translatable
 # The screen must be 2:1, 10 blocks wide
-class Game:
+
+class Game(Translatable):
     def __init__(self, block_size):
         self.block_size = block_size
         self.screen_size = width, height = 10 * self.block_size, 20 * self.block_size
@@ -27,7 +28,7 @@ class Game:
         shape_locations = self.translate_shape(shape[0], 0, 0)
         location = self.create_random_offsets(shape_locations)
         # Randomize the shape
-        new_tetrino = Tetrino(self, location, shape_index, self.tetrino_id)
+        new_tetrino = Tetrino(self.block_size, location, shape_index, self.tetrino_id)
         self.tetrino_set[self.tetrino_id] = new_tetrino
         self.tetrino_id += 1
         return new_tetrino
@@ -38,23 +39,23 @@ class Game:
         tetrino.location_offset[constant.Y] += y
         tetrino.update_location()
 
-    def translate_shape(self, shape, x_offset, y_offset):
-        # Not sure where to put this function; The game needs to check the bounds
-        # before it adds a random tetrino it. Bounds checking means checking
-        # the shape of the tetrino. The game_board will need the shape positions
-        # to check whether to move it
-        block_locations = []
-        tmp_x = x_offset
-        binary_number = '{0:016b}'.format(shape)
-        for i in range(len(binary_number)):
-            if i % 4 == 0 and i != 0:
-                y_offset += 1
-                tmp_x = x_offset
-            if binary_number[i] == '1':
-                coords = [tmp_x, y_offset]
-                block_locations.append(coords)
-            tmp_x += 1
-        return block_locations
+    # def translate_shape(self, shape, x_offset, y_offset):
+    #     # Not sure where to put this function; The game needs to check the bounds
+    #     # before it adds a random tetrino it. Bounds checking means checking
+    #     # the shape of the tetrino. The game_board will need the shape positions
+    #     # to check whether to move it
+    #     block_locations = []
+    #     tmp_x = x_offset
+    #     binary_number = '{0:016b}'.format(shape)
+    #     for i in range(len(binary_number)):
+    #         if i % 4 == 0 and i != 0:
+    #             y_offset += 1
+    #             tmp_x = x_offset
+    #         if binary_number[i] == '1':
+    #             coords = [tmp_x, y_offset]
+    #             block_locations.append(coords)
+    #         tmp_x += 1
+    #     return block_locations
     
     def create_random_offsets(self, block_locations):
         # We can use the block locations to tell us the initial state of the x

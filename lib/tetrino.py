@@ -1,9 +1,10 @@
 import lib.constants as constant
+from lib.translatable import Translatable
 
-class Tetrino:
-    def __init__(self, game, location_offset, shape, t_id):
+class Tetrino(Translatable):
+    def __init__(self, block_size, location_offset, shape, t_id):
         self.id = t_id
-        self.block_size = game.block_size
+        self.block_size = block_size
         self.shape_positions = constant.SHAPES[shape]
         self.shape_index = 0
         self.speed = .25
@@ -24,20 +25,20 @@ class Tetrino:
     def update_location(self):
         # We need to set the current location so we can add to grid.
         shape = self.shape_positions[self.shape_index]
-        block_locations = []
         x_offset = self.location_offset[constant.X]
-        tmp_x = x_offset
+        # tmp_x = x_offset
         y_offset = self.location_offset[constant.Y]
-        binary_number = '{0:016b}'.format(shape)
-        for i in range(len(binary_number)):
-            if i % 4 == 0 and i != 0:
-                y_offset += 1
-                tmp_x = x_offset
-            if binary_number[i] == '1':
-                coords = [tmp_x, y_offset]
-                block_locations.append(coords)
-            tmp_x += 1
-        print(block_locations)
+        block_locations = self.translate_shape(shape, x_offset, y_offset)
+        # binary_number = '{0:016b}'.format(shape)
+        # for i in range(len(binary_number)):
+        #     if i % 4 == 0 and i != 0:
+        #         y_offset += 1
+        #         tmp_x = x_offset
+        #     if binary_number[i] == '1':
+        #         coords = [tmp_x, y_offset]
+        #         block_locations.append(coords)
+        #     tmp_x += 1
+        # print(block_locations)
         self.locations = block_locations               
 
     def rotate(self):
