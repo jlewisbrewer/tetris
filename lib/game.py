@@ -3,8 +3,8 @@ import lib.constants as constant
 from lib.tetrino import Tetrino
 from lib.game_board import GameBoard
 from lib.translatable import Translatable
-# The screen must be 2:1, 10 blocks wide
 
+# The screen must be 2:1, 10 blocks wide
 class Game(Translatable):
     def __init__(self, block_size):
         self.block_size = block_size
@@ -26,9 +26,11 @@ class Game(Translatable):
         shape_index = randrange(constant.NUM_SHAPES)
         shape = constant.SHAPES[shape_index]
         shape_locations = self.translate_shape(shape[0], 0, 0)
+        num_blocks = len(shape_locations)
         location = self.create_random_offsets(shape_locations)
         # Randomize the shape
-        new_tetrino = Tetrino(self.block_size, location, shape_index, self.tetrino_id)
+        new_tetrino = Tetrino(self.block_size, location, shape_index, \
+            num_blocks, self.tetrino_id)
         self.tetrino_set[self.tetrino_id] = new_tetrino
         self.tetrino_id += 1
         return new_tetrino

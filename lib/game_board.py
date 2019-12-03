@@ -17,13 +17,14 @@ class GameBoard():
     
     def check_movement(self, tetrino):
         left, right, down, rotate = True, True, True, True
-        left_array = [False for _ in range(4)]
-        right_array = [False for _ in range(4)]
-        down_array = [False for _ in range(4)]
-        rotate_array = [False for _ in range(4)]
+        nb = tetrino.num_blocks
+        left_array = [False for _ in range(nb)]
+        right_array = [False for _ in range(nb)]
+        down_array = [False for _ in range(nb)]
+        rotate_array = [False for _ in range(nb)]
         locations = tetrino.locations
         new_shape = (tetrino.shape_index + 1) % 4
-        for i in range(len(locations)):
+        for i in range(nb):
             curr_x = locations[i][constant.X]
             curr_y = locations[i][constant.Y]
             if curr_x != 0 and (self.grid[curr_y][curr_x -1] == -1 \
@@ -35,11 +36,11 @@ class GameBoard():
             if curr_y != 19 and (self.grid[curr_y + 1][curr_x] == -1 \
                 or self.grid[curr_y + 1][curr_x] == tetrino):
                 down_array[i] = True
-        if sum(left_array) != 4:
+        if sum(left_array) != nb:
             left = False
-        if sum(right_array) != 4:
+        if sum(right_array) != nb:
             right = False
-        if sum(down_array) != 4:
+        if sum(down_array) != nb:
             down = False
         # Keep it as true for now
         rotate = True

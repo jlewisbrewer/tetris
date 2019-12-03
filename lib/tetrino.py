@@ -2,8 +2,9 @@ import lib.constants as constant
 from lib.translatable import Translatable
 
 class Tetrino(Translatable):
-    def __init__(self, block_size, location_offset, shape, t_id):
+    def __init__(self, block_size, location_offset, shape, num_blocks, t_id):
         self.id = t_id
+        self.num_blocks = num_blocks
         self.block_size = block_size
         self.shape_positions = constant.SHAPES[shape]
         self.shape_index = 0
@@ -11,7 +12,7 @@ class Tetrino(Translatable):
         self.speed_count = 1
         # This is going to be int offset from numbers on the grid array
         self.location_offset = location_offset
-        # This will be a list of 4 block locations
+        # This will be a list of 4 or 5 block locations
         self.locations = []
         self.image = 'images/intro_ball.gif'
 
