@@ -6,6 +6,7 @@ class Tetrino(Translatable):
         self.id = t_id
         self.num_blocks = num_blocks
         # self.block_size = block_size
+        self.shape = shape
         self.shape_positions = constant.SHAPES[shape]
         self.shape_index = 0
         self.speed = .25
@@ -15,8 +16,10 @@ class Tetrino(Translatable):
         # This will be a list of 4 or 5 block locations
         self.locations = []
         self.image = 'images/intro_ball.gif'
-
         self.update_location()
+    
+    def __str__(self):
+        return f'Tetrino {self.id}: {self.locations}\nOffset: {self.location_offset}'
 
     def speed_up(self):
         if self.speed > 0:

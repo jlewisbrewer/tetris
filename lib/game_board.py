@@ -23,9 +23,11 @@ class GameBoard():
         down_array = [False for _ in range(nb)]
         rotate_array = [False for _ in range(nb)]
         locations = tetrino.locations
-        new_shape = (tetrino.shape_index + 1) % 4
+        # new_shape = (tetrino.shape_index + 1) % 4
         new_tetrino = Tetrino(tetrino.location_offset, \
-            new_shape, tetrino.num_blocks, tetrino.id)
+            tetrino.shape, tetrino.num_blocks, tetrino.id)
+        new_tetrino.rotate()
+        print(new_tetrino)
         for i in range(nb):
             curr_x = locations[i][constant.X]
             curr_y = locations[i][constant.Y]
