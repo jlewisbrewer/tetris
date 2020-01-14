@@ -24,6 +24,8 @@ class GameBoard():
         rotate_array = [False for _ in range(nb)]
         locations = tetrino.locations
         new_shape = (tetrino.shape_index + 1) % 4
+        new_tetrino = Tetrino(tetrino.location_offset, \
+            new_shape, tetrino.num_blocks, tetrino.id)
         for i in range(nb):
             curr_x = locations[i][constant.X]
             curr_y = locations[i][constant.Y]
@@ -36,6 +38,17 @@ class GameBoard():
             if curr_y != 19 and (self.grid[curr_y + 1][curr_x] == -1 \
                 or self.grid[curr_y + 1][curr_x] == tetrino):
                 down_array[i] = True
+            
+            try:
+                new_x = new_tetrino.locations[i][constant.X]
+                new_y = new_tetrino.locations[i][constant.Y]
+                grid_val = self.grid[new_y][new_x]
+                if new_x >= 0 and new_x <= 9 or new_y >= 0 and new_y <= 19:
+                    if grid_val == -1 or grid_val == tetrino:
+                        rotate_array[i] = True
+
+            except IndexError:
+                continue
         if sum(left_array) != nb:
             left = False
         if sum(right_array) != nb:
@@ -43,7 +56,9 @@ class GameBoard():
         if sum(down_array) != nb:
             down = False
         # Keep it as true for now
-        rotate = True
+        if sum(rotate_array) != nb:
+            rotate = False
+
         return left, right, down, rotate
         
     def update_board(self, tetrino_set):

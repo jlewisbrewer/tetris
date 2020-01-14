@@ -43,7 +43,7 @@ while 1:
         if pressed[pygame.K_UP] and time() > prev_time + interval:
             print('pressed up')
             print(curr.locations)
-            curr.rotate()
+            game.rotate(curr)
             print(curr.locations)
             prev_time = time()
 
