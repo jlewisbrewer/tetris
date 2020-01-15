@@ -8,7 +8,7 @@ from lib.translatable import Translatable
 class Game(Translatable):
     def __init__(self, block_size):
         self.block_size = block_size
-        self.screen_size = width, height = 10 * self.block_size, 20 * self.block_size
+        self.screen_size = 10 * self.block_size, 20 * self.block_size
         self.game_board = GameBoard()
         self.background_color = 0, 0, 0
         self.tetrino_set = dict()

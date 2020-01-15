@@ -45,12 +45,13 @@ class GameBoard():
                 new_x = new_tetrino.locations[i][constant.X]
                 new_y = new_tetrino.locations[i][constant.Y]
                 grid_val = self.grid[new_y][new_x]
-                if new_x >= 0 and new_x <= 9 or new_y >= 0 and new_y <= 19:
+                if new_x >= 0 and new_x <= 9 and new_y >= 0 and new_y <= 19:
                     if grid_val == -1 or grid_val == tetrino:
                         rotate_array[i] = True
 
             except IndexError:
                 continue
+
         if sum(left_array) != nb:
             left = False
         if sum(right_array) != nb:
