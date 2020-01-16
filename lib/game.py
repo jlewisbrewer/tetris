@@ -46,12 +46,12 @@ class Game(Translatable):
         # and y offsets. For instance, a square is flush in the upper left 
         # quadrant, so the x offset can be between 0 and 8.
         min_x, max_x, min_y, _ = self.find_minimum_coords(block_locations)
-        print(f'Min x: {min_x}')
-        print(f'Max x: {max_x}')
+        # print(f'Min x: {min_x}')
+        # print(f'Max x: {max_x}')
         x_offset = randrange(10 - (max_x - min_x)) - min_x
         y_offset = 0 - min_y
-        print(f'X offset: {x_offset}')
-        print(f'Y offset:{y_offset}')
+        # print(f'X offset: {x_offset}')
+        # print(f'Y offset:{y_offset}')
         return [x_offset, y_offset]
 
     def find_minimum_coords(self, block_locations):
@@ -72,8 +72,14 @@ class Game(Translatable):
     def rotate(self, tetrino):
         tetrino.rotate()
 
-    def return_score(self):
-        pass
+    def display_board(self):
+        print(self.game_board)
 
-    def check_blocks(self):
-        pass
+    def calculate_score(self):
+        mul = self.check_board()
+        if mul > 0:
+            inc = 100 * mul + ((mul - 1) * 25)
+            self.score += inc
+
+    def check_board(self):
+        return self.game_board.check_board(self.tetrino_set)

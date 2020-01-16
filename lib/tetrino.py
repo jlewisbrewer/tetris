@@ -39,3 +39,11 @@ class Tetrino(Translatable):
         index = self.shape_index
         self.shape_index = (index + 1) % 4
         self.update_location()
+    
+    def adjust_locations(self, rc):
+        self.locations =[[_, y + 1] for [_, y] in self.locations if y < rc]
+        print(f'locations after: {self.locations}')
+    
+    def remove_locations(self, rc, x):
+        if [x, rc] in self.locations:
+            self.locations = [[_, y] for [_, y] in self.locations if y != rc]

@@ -22,6 +22,8 @@ while 1:
         curr = game.create_random_tetrino()
         new_tetrino = False
         game.update_board()
+        game.display_board()
+        print(f'Score is {game.score}')
 
     pressed = pygame.key.get_pressed()
     left_move, right_move, down_move, rotate_move \
@@ -55,6 +57,8 @@ while 1:
             prev_time = time()
 
     screen.fill(game.background_color)
+    game.calculate_score()
+    game.update_board()
     
     for _, tetrino in game.tetrino_set.items():
         img = pygame.image.load(tetrino.image)

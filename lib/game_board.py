@@ -5,6 +5,17 @@ class GameBoard():
     def __init__(self):
         self.grid = [[-1 for num in range(10)] for num in range(20)]
 
+    def __str__(self):
+        res = ''
+        for row in self.grid:
+            for i in row:
+                val = i
+                if isinstance(i, Tetrino):
+                    val = f't{i.id}'
+                res += f'{str(val)} '
+            res += '\n'
+        return res
+
     def _clear_board(self):
         self.grid = [[-1 for num in range(10)] for num in range(20)]
     
@@ -27,21 +38,22 @@ class GameBoard():
         new_tetrino = Tetrino(tetrino.location_offset, \
             tetrino.shape, tetrino.num_blocks, tetrino.id)
         new_tetrino.rotate()
-        print(new_tetrino)
+        # print(new_tetrino)
         for i in range(nb):
-            curr_x = locations[i][constant.X]
-            curr_y = locations[i][constant.Y]
-            if curr_x != 0 and (self.grid[curr_y][curr_x -1] == -1 \
-                or self.grid[curr_y][curr_x - 1] == tetrino):
-                left_array[i] = True
-            if curr_x != 9 and (self.grid[curr_y][curr_x + 1] == -1 \
-                or self.grid[curr_y][curr_x + 1] == tetrino):
-                right_array[i] = True
-            if curr_y != 19 and (self.grid[curr_y + 1][curr_x] == -1 \
-                or self.grid[curr_y + 1][curr_x] == tetrino):
-                down_array[i] = True
-            
             try:
+                curr_x = locations[i][constant.X]
+                curr_y = locations[i][constant.Y]
+                if curr_x != 0 and (self.grid[curr_y][curr_x -1] == -1 \
+                    or self.grid[curr_y][curr_x - 1] == tetrino):
+                    left_array[i] = True
+                if curr_x != 9 and (self.grid[curr_y][curr_x + 1] == -1 \
+                    or self.grid[curr_y][curr_x + 1] == tetrino):
+                    right_array[i] = True
+                if curr_y != 19 and (self.grid[curr_y + 1][curr_x] == -1 \
+                    or self.grid[curr_y + 1][curr_x] == tetrino):
+                    down_array[i] = True
+            
+
                 new_x = new_tetrino.locations[i][constant.X]
                 new_y = new_tetrino.locations[i][constant.Y]
                 grid_val = self.grid[new_y][new_x]
@@ -68,3 +80,32 @@ class GameBoard():
         self._clear_board()
         for _, t in tetrino_set.items():
             self._add_to_board(t)
+
+    def check_board(self, tetrino_set):
+        c = 0
+        rc = 0
+        for row in self.grid:
+            tc = 0
+            for i in row:
+                if isinstance(i, Tetrino):
+                    tc += 1
+            if tc is 10:
+                c += 1
+                x = 0
+                for tetrino in row:
+                    print(f'adjusting locations.... {rc}')
+                    tetrino.remove_locations(rc, x)
+                    x += 1
+                self.adjust_locations(rc, tetrino_set)
+            rc += 1
+        return c 
+
+    def adjust_locations(self, rc, tetrino_set):
+        print(tetrino_set)
+        t_set = set()
+        for _, t in tetrino_set.items():
+            for [_, y] in t.locations:
+                if y < rc:
+                    t_set.add(t)
+        for tetrino in t_set:
+            tetrino.adjust_locations(rc)         
