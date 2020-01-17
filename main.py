@@ -4,7 +4,7 @@ from lib.game import Game
 from time import time
 
 
-game = Game(constant.MEDIUM)
+game = Game(constant.LARGE)
 new_tetrino = True
 interval = .25
 prev_time = time()

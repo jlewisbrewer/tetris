@@ -2,10 +2,10 @@ import lib.constants as constant
 from lib.translatable import Translatable
 
 class Tetrino(Translatable):
-    def __init__(self, location_offset, shape, num_blocks, t_id):
+    def __init__(self, location_offset, shape, num_blocks, t_id, block_size):
         self.id = t_id
         self.num_blocks = num_blocks
-        # self.block_size = block_size
+        self.block_size = block_size
         self.shape = shape
         self.shape_positions = constant.SHAPES[shape]
         self.shape_index = 0
@@ -15,11 +15,24 @@ class Tetrino(Translatable):
         self.location_offset = location_offset
         # This will be a list of 4 or 5 block locations
         self.locations = []
-        self.image = 'images/intro_ball.gif'
+        self.color = constant.COLORS[shape]
+        self.image = self._get_image()
         self.update_location()
     
     def __str__(self):
         return f'Tetrino {self.id}: {self.locations}\nOffset: {self.location_offset}'
+
+    def _get_image(self):
+        f = constant.IMGFILE
+        if self.block_size == 10:
+            f += '/small/'
+        if self.block_size == 25:
+            f += 'intro_ball.gif'
+            return f
+        if self.block_size == 50:
+            f += '/large/'
+        f += f'{self.color}.png'
+        return f
 
     def speed_up(self):
         if self.speed > 0:

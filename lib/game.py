@@ -10,7 +10,7 @@ class Game(Translatable):
         self.block_size = block_size
         self.screen_size = 10 * self.block_size, 20 * self.block_size
         self.game_board = GameBoard()
-        self.background_color = 0, 0, 0
+        self.background_color = 55, 55, 40
         self.tetrino_set = dict()
         self.tetrino_id = 1
         self.score = 0
@@ -30,7 +30,7 @@ class Game(Translatable):
         location = self.create_random_offsets(shape_locations)
         # Randomize the shape
         new_tetrino = Tetrino(location, shape_index, \
-            num_blocks, self.tetrino_id)
+            num_blocks, self.tetrino_id, self.block_size)
         self.tetrino_set[self.tetrino_id] = new_tetrino
         self.tetrino_id += 1
         return new_tetrino
