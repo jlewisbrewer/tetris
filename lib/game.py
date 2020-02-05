@@ -83,3 +83,6 @@ class Game(Translatable):
 
     def check_board(self):
         return self.game_board.check_board(self.tetrino_set)
+
+    def check_game_over(self):
+        return self.game_board.check_game_over()

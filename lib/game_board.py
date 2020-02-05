@@ -113,3 +113,10 @@ class GameBoard():
                     t_set.add(t)
         for tetrino in t_set:
             tetrino.adjust_locations(rc)
+
+    def check_game_over(self):
+        for val in self.grid[0]:
+            if val is not -1:
+                return True
+        return False
+
