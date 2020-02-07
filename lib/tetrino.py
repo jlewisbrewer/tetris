@@ -27,8 +27,7 @@ class Tetrino(Translatable):
         if self.block_size == 10:
             f += '/small/'
         if self.block_size == 25:
-            f += 'intro_ball.gif'
-            return f
+            f += '/medium/'
         if self.block_size == 50:
             f += '/large/'
         f += f'{self.color}.png'
@@ -55,7 +54,7 @@ class Tetrino(Translatable):
     
     def adjust_locations(self, rc):
         self.locations =[[_, y + 1] for [_, y] in self.locations if y < rc]
-        print(f'locations after: {self.locations}')
+        # print(f'locations after: {self.locations}')
     
     def remove_locations(self, rc, x):
         if [x, rc] in self.locations:

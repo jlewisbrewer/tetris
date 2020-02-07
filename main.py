@@ -4,14 +4,30 @@ from lib.game import Game
 from time import time
 
 
-game = Game(constant.LARGE)
+
+try:
+    inp = sys.argv[1]
+except IndexError:
+    print('Must specify game size. Please consult README.')
+    sys.exit()
+
+if inp == 'medium':
+    size = constant.MEDIUM
+if inp == 'large':
+    size = constant.LARGE
+if inp == 'small':
+    size = constant.SMALL
+else:
+    print('Game size not recognized. Please consult README.')
+    sys.exit()
+
+game = Game(size)
 new_tetrino = True
 interval = .25
 prev_time = time()
 
 
 #https://stackoverflow.com/questions/43503995/pygame-key-get-pressed-how-to-add-interval
-
 # Need to convert the game grid into pygame
 screen = pygame.display.set_mode(game.screen_size)
 while 1:
@@ -26,7 +42,7 @@ while 1:
         curr = game.create_random_tetrino()
         new_tetrino = False
         game.update_board()
-        game.display_board()
+        # game.display_board()
         print(f'Score is {game.score}')
 
     pressed = pygame.key.get_pressed()
@@ -48,10 +64,10 @@ while 1:
             prev_time = time()
     if rotate_move == True:
         if pressed[pygame.K_UP] and time() > prev_time + interval:
-            print('pressed up')
-            print(curr.locations)
+            # print('pressed up')
+            # print(curr.locations)
             game.rotate(curr)
-            print(curr.locations)
+            # print(curr.locations)
             prev_time = time()
 
 
