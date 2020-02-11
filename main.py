@@ -18,12 +18,9 @@ if inp == 'large':
 if inp == 'small':
     size = constant.SMALL
 
-game = Game(size)
-game.run()
-
-# try:
-#     game = Game(size)
-#     game.run()
-# except NameError:
-#     print('Size not input correctly. Please consult README')
-#     sys.exit()
+try:
+    game = Game(size)
+    game.run()
+except NameError:
+    print('Size not input correctly. Please consult README')
+    sys.exit()
