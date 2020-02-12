@@ -6,7 +6,6 @@ from lib.tetrino import Tetrino
 from lib.game_board import GameBoard
 from lib.translatable import Translatable
 
-# The screen must be 2:1, 10 blocks wide
 class Game(Translatable):
     def __init__(self, block_size):
         self.block_size = block_size
@@ -90,19 +89,18 @@ class Game(Translatable):
         interval = .25
         prev_time = time()
         white = (255, 255, 255)     
-        green = (0, 255, 0) 
         
         pygame.init()
-        # https://www.geeksforgeeks.org/python-display-text-to-pygame-window/
-        font = pygame.font.Font('freesansbold.ttf', self.block_size)
+        # # https://www.geeksforgeeks.org/python-display-text-to-pygame-window/
+        # font = pygame.font.Font('freesansbold.ttf', self.block_size)
 
-        text = font.render(f'Total score is {self.score}', True, white)  
-        textRect = text.get_rect()
+        # text = font.render(f'Total score is {self.score}', True, white)  
+        # textRect = text.get_rect()
   
-        # set the center of the rectangular object. 
-        textRect.center = (self.screen_size[0] // 2 , self.screen_size[1] // 2) 
-        #https://stackoverflow.com/questions/43503995/pygame-key-get-pressed-
-        # how-to-add-interval
+        # # set the center of the rectangular object. 
+        # textRect.center = (self.screen_size[0] // 2 , self.screen_size[1] // 2) 
+        # #https://stackoverflow.com/questions/43503995/pygame-key-get-pressed-
+        # # how-to-add-interval
         screen = pygame.display.set_mode(self.screen_size)
         pygame.display.set_caption('Pygame Tetris')
         
@@ -114,6 +112,17 @@ class Game(Translatable):
             if new_tetrino == True:
                 end = self.check_game_over()
                 if end:
+                    # https://www.geeksforgeeks.org/python-display-text-to-
+                    # pygame-window/
+                    font = pygame.font.Font('freesansbold.ttf', self.block_size)
+
+                    text = font.render(f'Total score is {self.score}', True, 
+                        white)  
+                    textRect = text.get_rect()
+            
+                    # set the center of the rectangular object. 
+                    textRect.center = (self.screen_size[0] // 2 , 
+                        self.screen_size[1] // 2)
                     while True:
                         screen.blit(text, textRect)
                         for event in pygame.event.get() : 
@@ -133,6 +142,7 @@ class Game(Translatable):
                 # We're at the bottom
                 new_tetrino = True
                 self.calculate_score()
+                print(f'Score: {self.score}')
             if left_move == True:
                 if pressed[pygame.K_LEFT] and time() > prev_time + interval:
                     self.move_tetrino(curr, -1, 0)

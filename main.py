@@ -1,8 +1,7 @@
-import sys, pygame
+import sys
 import lib.constants as constant
 from lib.game import Game
 from time import time
-
 
 
 try:
