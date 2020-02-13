@@ -3,12 +3,12 @@ from lib.translatable import Translatable
 
 class Tetrino(Translatable):
     """
-    This is a class that handles actions on the Tetris shapes
+    This is a class that handles actions on the Tetris shapes.
     
     Attributes:
         id (int) : Id of the tetrino
         num_blocks (int) : the number of blocks in the tetrino (either 4 or 5)
-        block_size (int) : the size of the blocks (small, medium, large)
+        game_size (int) : the size of the game (small, medium, large)
         shape (int) : index of the shape
         shape_positions (list) : the various shapes when rotated, a list of 
             binary numbers
@@ -22,7 +22,7 @@ class Tetrino(Translatable):
         image (string) : file location of the block image
     """
 
-    def __init__(self, location_offset, shape, num_blocks, t_id, block_size):
+    def __init__(self, location_offset, shape, num_blocks, t_id, game_size):
         """
         The constructor for the Tetrino class.
 
@@ -31,12 +31,12 @@ class Tetrino(Translatable):
             shape (int) : index of the tetrino shape 
             num_blocks (int) : the numebr of tetrino blocks
             t_id (int) : id of the tetrino
-            block_size (int) : the size of the tetrino blocks (small, medium,
+            game_size (int) : the size of the tetrino blocks (small, medium,
                 or large)
         """
         self.id = t_id
         self.num_blocks = num_blocks
-        self.block_size = block_size
+        self.game_size = game_size
         self.shape = shape
         self.shape_positions = constant.SHAPES[shape]
         self.shape_index = 0
@@ -66,11 +66,11 @@ class Tetrino(Translatable):
         """
 
         f = constant.IMGFILE
-        if self.block_size == 10:
+        if self.game_size == 10:
             f += '/small/'
-        if self.block_size == 25:
+        if self.game_size == 25:
             f += '/medium/'
-        if self.block_size == 50:
+        if self.game_size == 50:
             f += '/large/'
         f += f'{self.color}.png'
         return f
